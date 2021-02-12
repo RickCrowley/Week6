@@ -5,6 +5,7 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   // post data to Firestore. For best results, use square images
   // from Unsplash, e.g. https://unsplash.com/s/photos/tacos?orientation=squarish
   // Right-click and "copy image address"
+
   // - Begin by using .querySelector to select the form
   //   element, add an event listener to the 'submit' event,
   //   and preventing the default behavior.
@@ -13,7 +14,29 @@ window.addEventListener('DOMContentLoaded', async function(event) {
   //   db.collection('posts').add(). Along withthe username and image 
   //   URL, add a "likes" field and set it to 0; we'll use this later.
   // - Verify (in Firebase) that records are being added.
-  
+
+  let form = document.querySelector(`form`)
+  console.log(form)
+
+  form.addEventListener('submit', async function(event){
+    event.preventDefault()
+    // console.log(`prevented default`)
+
+    let usernameInput = document.querySelector(`#username`)
+    let imageUrlInput = document.querySelector(`#image-url`)
+
+    console.log(usernameInput.value)
+    console.log(imageUrlInput.value)
+
+    let result = await db.collection('posts').add({
+      imageUrl: imageUrlInput.value,
+      userName: usernameInput.value,
+      likes: 0
+    })
+    console.log(result)
+  })
+
+
   // Step 2: Read existing posts from Firestore and display them
   // when the page is loaded
   // - Read data using db.collection('posts').get()
